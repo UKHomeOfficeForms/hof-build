@@ -39,7 +39,7 @@
     "witch": "^1.0.0"
   },
   "devDependencies": {
-    "eslint": "^3.17.1",
+    "eslint": "^6.6.0",
     "eslint-config-homeoffice": "^2.1.2"
   }
 }
