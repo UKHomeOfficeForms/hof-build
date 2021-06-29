@@ -1,4 +1,4 @@
-[![NPM_Publish Actions Status](https://github.com/UKHomeOfficeForms/hof-build/workflows/NPM_Publish/badge.svg)](https://github.com/UKHomeOfficeForms/hof-build/actions)
+[![NPM_Publish Actions Status](https://github.com/UKHomeOfficeForms/hof-build/workflows/Auto_Publish/badge.svg)](https://github.com/UKHomeOfficeForms/hof-build/actions)
 
 # hof-build
 Performs build workflow for hof apps in prod and development
