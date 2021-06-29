@@ -31,7 +31,7 @@ jobs:
           npm version patch
         env:
           NODE_AUTH_TOKEN: ${{ secrets.npm_token }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.action_robot }}
 
   # auto-update-package-json:
   #   needs: [test, auto-tag]
