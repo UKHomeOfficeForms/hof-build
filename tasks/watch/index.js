@@ -16,7 +16,6 @@ const run = require('../../lib/run');
 const env = require('../../lib/env');
 
 module.exports = config => {
-
   let toBuild = [];
   let server;
 
@@ -32,9 +31,7 @@ module.exports = config => {
   }, {});
 
   function triggersTask(file) {
-    return Object.keys(matchers).filter(key => {
-      return match(file, matchers[key]);
-    });
+    return Object.keys(matchers).filter(key => match(file, matchers[key]));
   }
 
   function restart() {
@@ -95,17 +92,15 @@ module.exports = config => {
     process.stdin.resume();
     process.stdin.setEncoding('utf8');
     process.stdin.on('data', data => {
-      data = (data + '').trim().toLowerCase();
-      if (data === config.watch.restart) {
+      const dataType = (data + '').trim().toLowerCase();
+      if (dataType  === config.watch.restart) {
         restart();
       }
     });
   }
 
   function watch() {
-
     return new Promise(resolve => {
-
       const ignored = [].concat(config.watch.ignore);
 
       if (!config.watchNodeModules) {
@@ -120,7 +115,6 @@ module.exports = config => {
       const watcher = chokidar.watch('.', { ignored });
 
       watcher.on('ready', () => {
-
         const watched = watcher.getWatched();
         console.log(`Watching ${Object.keys(watched).length} files for changes`);
 
@@ -132,7 +126,6 @@ module.exports = config => {
         stdin();
         resolve();
       });
-
     });
   }
 
@@ -154,14 +147,7 @@ module.exports = config => {
   }
 
   return build(config)
-    .then(() => {
-      return watch();
-    })
-    .then(() => {
-      return loadenv();
-    })
-    .then(() => {
-      return restart();
-    });
-
+    .then(() => watch())
+    .then(() => loadenv())
+    .then(() => restart());
 };
