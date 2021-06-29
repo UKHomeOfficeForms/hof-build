@@ -5,7 +5,6 @@ const merge = require('lodash.merge');
 const config = require('./config/defaults');
 
 module.exports = options => {
-
   const settings = {};
 
   merge(settings, config);
@@ -46,5 +45,4 @@ module.exports = options => {
   }
 
   return require(`./tasks/${task}`)(settings);
-
 };

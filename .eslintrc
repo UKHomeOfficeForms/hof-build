@@ -1,9 +1,0 @@
-extends:
-- "homeoffice/config/default"
-
-env:
-  es6: true
-
-rules:
-  no-console: 0
-  no-process-env: 0
