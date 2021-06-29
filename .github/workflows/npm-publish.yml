@@ -25,7 +25,10 @@ jobs:
         with:
           node-version: 14
           registry-url: https://registry.npmjs.org/
-      - run: npm version patch
+      - run: |
+          git config --local user.email "$(git log --format='%ae' HEAD^!)"
+          git config --local user.name "$(git log --format='%an' HEAD^!)"
+          npm version patch
 
   # auto-update-package-json:
   #   needs: [test, auto-tag]
