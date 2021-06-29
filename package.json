@@ -1,6 +1,6 @@
 {
   "name": "hof-build",
-  "version": "2.0.7",
+  "version": "2.0.9",
   "description": "Performs build workflow for hof apps in prod and development",
   "main": "index.js",
   "bin": {
@@ -8,7 +8,7 @@
   },
   "scripts": {
     "test": "eslint . --config ./node_modules/eslint-config-hof/default.js && eslint --config ./node_modules/eslint-config-hof/default.js bin/hof-build",
-    "postversion": "git push && git push --tags"
+    "postversion": "git tag $npm_package_version && git push --tags"
   },
   "repository": {
     "type": "git",
