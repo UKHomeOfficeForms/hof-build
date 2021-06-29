@@ -22,11 +22,17 @@ jobs:
     if: "startsWith(github.ref, 'refs/heads/master') && !startsWith(github.event.head_commit.message, '[RELEASE]')"
     steps:
       - uses: actions/checkout@master
+        env:
+            GITHUB_TOKEN: ${{ secrets.action_robot }}
       - uses: actions/setup-node@v1
+        env:
+            GITHUB_TOKEN: ${{ secrets.action_robot }}
         with:
           node-version: 14
           registry-url: https://registry.npmjs.org/
-      - run: |
+      - env:
+          GITHUB_TOKEN: ${{ secrets.action_robot }}
+        run: |
           git config --local user.email "$(git log --format='%ae' HEAD^!)"
           git config --local user.name "$(git log --format='%an' HEAD^!)"
           npm version patch
