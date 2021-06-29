@@ -26,7 +26,7 @@ jobs:
           node-version: 14
           registry-url: https://registry.npmjs.org/
       - run: npm version patch
-      - env:
+        env:
           NODE_AUTH_TOKEN: ${{ secrets.npm_token }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
