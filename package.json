@@ -7,7 +7,7 @@
     "hof-build": "./bin/hof-build"
   },
   "scripts": {
-    "test": "eslint . && eslint bin/hof-build",
+    "test": "eslint . --config ./node_modules/eslint-config-hof/default.js && eslint --config ./node_modules/eslint-config-hof/default.js bin/hof-build",
     "postversion": "git push && git push --tags"
   },
   "repository": {
