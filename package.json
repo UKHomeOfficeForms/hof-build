@@ -8,8 +8,7 @@
   },
   "scripts": {
     "test": "eslint . --config ./node_modules/eslint-config-hof/default.js && eslint --config ./node_modules/eslint-config-hof/default.js bin/hof-build",
-    "postversion": "git push && git push --tags",
-    "release": "release-it"
+    "postversion": "git push && git push --tags"
   },
   "repository": {
     "type": "git",
