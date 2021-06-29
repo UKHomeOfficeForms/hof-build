@@ -29,5 +29,6 @@ jobs:
       - run: |
           git config --local user.email "$(git log --format='%ae' HEAD^!)"
           git config --local user.name "$(git log --format='%an' HEAD^!)"
+          npm install
           npm version patch
           npm run release
