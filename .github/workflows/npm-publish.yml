@@ -19,6 +19,7 @@ jobs:
   auto-tag:
     needs: test
     runs-on: ubuntu-latest
+    if: "startsWith(github.ref, 'refs/heads/master') && !startsWith(github.event.head_commit.message, '[RELEASE]')"
     steps:
       - uses: actions/checkout@master
       - uses: actions/setup-node@v1
@@ -29,41 +30,11 @@ jobs:
           git config --local user.email "$(git log --format='%ae' HEAD^!)"
           git config --local user.name "$(git log --format='%an' HEAD^!)"
           npm version patch
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.npm_token }}
-
-  # auto-update-package-json:
-  #   needs: [test, auto-tag]
-  #   runs-on: ubuntu-latest
-  #   if: "startsWith(github.ref, 'refs/heads/master') && !startsWith(github.event.head_commit.message, '[RELEASE]')"
-  #   steps:
-  #     - name: "Checkout source code"
-  #       uses: "actions/checkout@v2"
-  #       with:
-  #         ref: ${{ github.ref }}
-  #     - name: "cat package.json"
-  #       run: cat ./package.json
-  #     - name: "Setup Node.js"
-  #       uses: actions/setup-node@v1
-  #       with:
-  #         node-version: 14
-  #         registry-url: https://registry.npmjs.org/
-  #     - name:  'Automated Version Bump'
-  #       uses: 'phips28/gh-action-bump-version@master'
-  #       env:
-  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  #       with:
-  #         commit-message: 'CI: bumps version to {{version}}'
-  #     - name: "cat package.json"
-  #       run: cat ./package.json
-  #     - name:  'Output Step'
-  #       env:
-  #         NEW_TAG: ${{ steps.version-bump.outputs.newTag }}
-  #       run: echo "new tag $NEW_TAG"
 
   auto-publish:
+    needs: [test, auto-tag]
     runs-on: ubuntu-latest
-    if: startsWith(github.ref, 'refs/tags/')
+    if: "startsWith(github.ref, 'refs/heads/master') && !startsWith(github.event.head_commit.message, '[RELEASE]')"
     steps:
       - uses: actions/checkout@master
       - uses: actions/setup-node@v1
@@ -78,9 +49,38 @@ jobs:
   auto-create-release:
     needs: auto-publish
     runs-on: ubuntu-latest
-    if: startsWith(github.ref, 'refs/tags/')
+    if: "startsWith(github.ref, 'refs/heads/master') && !startsWith(github.event.head_commit.message, '[RELEASE]')"
     steps:
       - uses: actions/checkout@master
       - uses: Roang-zero1/github-create-release-action@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    # auto-update-package-json:
+    #   needs: [test, auto-tag]
+    #   runs-on: ubuntu-latest
+    #   if: "startsWith(github.ref, 'refs/heads/master') && !startsWith(github.event.head_commit.message, '[RELEASE]')"
+    #   steps:
+    #     - name: "Checkout source code"
+    #       uses: "actions/checkout@v2"
+    #       with:
+    #         ref: ${{ github.ref }}
+    #     - name: "cat package.json"
+    #       run: cat ./package.json
+    #     - name: "Setup Node.js"
+    #       uses: actions/setup-node@v1
+    #       with:
+    #         node-version: 14
+    #         registry-url: https://registry.npmjs.org/
+    #     - name:  'Automated Version Bump'
+    #       uses: 'phips28/gh-action-bump-version@master'
+    #       env:
+    #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    #       with:
+    #         commit-message: 'CI: bumps version to {{version}}'
+    #     - name: "cat package.json"
+    #       run: cat ./package.json
+    #     - name:  'Output Step'
+    #       env:
+    #         NEW_TAG: ${{ steps.version-bump.outputs.newTag }}
+    #       run: echo "new tag $NEW_TAG"
