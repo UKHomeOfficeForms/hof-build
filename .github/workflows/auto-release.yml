@@ -1,13 +1,15 @@
 # This workflow will run tests using node and then publish a package to GitHub Packages when a release is created
 # For more information see: https://help.github.com/actions/language-and-framework-guides/publishing-nodejs-packages
-name: Auto_Release
+name: Auto_Publish
 on:
-  push:
-    tags:
-      - v*.*.*
+  workflow_run:
+    workflows: ["Auto_Tag"]
+    types:
+      - completed
 jobs:
   auto-publish:
     runs-on: ubuntu-latest
+    if: "startsWith(github.ref, 'refs/heads/master') && !startsWith(github.event.head_commit.message, '[RELEASE]')"
     steps:
       - uses: actions/checkout@master
       - uses: actions/setup-node@v1
@@ -18,11 +20,3 @@ jobs:
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.npm_token }}
-
-  auto-create-release:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@master
-      - uses: Roang-zero1/github-create-release-action@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
