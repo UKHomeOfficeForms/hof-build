@@ -19,7 +19,7 @@ jobs:
   publish:
     needs: test
     runs-on: ubuntu-latest
-    if: startsWith(github.ref, 'refs/heads/master/')
+    if: startsWith(github.ref, 'refs/heads/master')
     steps:
       - uses: actions/checkout@master
       - uses: actions/setup-node@v1
@@ -35,7 +35,7 @@ jobs:
   create-release:
     needs: test
     runs-on: ubuntu-latest
-    if: startsWith(github.ref, 'refs/heads/master/')
+    if: startsWith(github.ref, 'refs/heads/master')
     steps:
       - uses: actions/checkout@master
       - uses: Roang-zero1/github-create-release-action@master
