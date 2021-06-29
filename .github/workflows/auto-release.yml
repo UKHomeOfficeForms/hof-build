@@ -30,13 +30,4 @@ jobs:
           git config --local user.email "$(git log --format='%ae' HEAD^!)"
           git config --local user.name "$(git log --format='%an' HEAD^!)"
           npm version patch
-
-  auto-create-release:
-    needs: [test, auto-tag]
-    runs-on: ubuntu-latest
-    if: "startsWith(github.ref, 'refs/heads/master') && !startsWith(github.event.head_commit.message, '[RELEASE]')"
-    steps:
-      - uses: actions/checkout@master
-      - uses: Roang-zero1/github-create-release-action@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          npm run release
