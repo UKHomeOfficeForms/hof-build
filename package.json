@@ -1,6 +1,6 @@
 {
   "name": "hof-build",
-  "version": "2.0.15",
+  "version": "2.0.16",
   "description": "Performs build workflow for hof apps in prod and development",
   "main": "index.js",
   "bin": {
