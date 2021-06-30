@@ -9,7 +9,7 @@ jobs:
       matrix:
         node-version: [10.x, 12.x, 14.x]
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2.2.0
       - uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
@@ -24,7 +24,7 @@ jobs:
       !contains(github.event.head_commit.message, '[MAJOR]') &&
       !contains(github.event.head_commit.message, '[MINOR]')
     steps:
-      - uses: actions/checkout@master
+      - uses: actions/checkout@v2.2.0
       - uses: actions/setup-node@v1
         with:
           node-version: 14
@@ -42,7 +42,7 @@ jobs:
       !contains(github.event.head_commit.message, '[MAJOR]') &&
       contains(github.event.head_commit.message, '[MINOR]')
     steps:
-      - uses: actions/checkout@master
+      - uses: actions/checkout@v2.2.0
       - uses: actions/setup-node@v1
         with:
           node-version: 14
@@ -60,7 +60,7 @@ jobs:
       contains(github.event.head_commit.message, '[MAJOR]') &&
       !contains(github.event.head_commit.message, '[MINOR]')
     steps:
-      - uses: actions/checkout@master
+      - uses: actions/checkout@v2.2.0
       - uses: actions/setup-node@v1
         with:
           node-version: 14
