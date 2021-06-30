@@ -9,7 +9,7 @@ on:
 jobs:
   auto-publish:
     runs-on: ubuntu-latest
-    if: "github.head_ref == 'master'"
+    if: startsWith(github.ref, 'refs/heads/master')
     steps:
       - uses: actions/checkout@master
       - uses: actions/setup-node@v1
