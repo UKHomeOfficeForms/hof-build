@@ -1,31 +1,29 @@
-var local = require('./local');
-var resolve = require('./resolver');
+const local = require('./local');
+const resolve = require('./resolver');
 
 module.exports = function (options) {
+  const importerOptions = options || {};
 
-    options = options || {};
-
-    function importer(url, file, done) {
-        if (options.aliases && options.aliases[url]) {
-            url = options.aliases[url];
-        }
-            
-        local(url, file, function (err, isLocal) {
-            
-            if (err || isLocal) {
-                done({ file: url });
-            } else {
-                resolve(url, file)
-                .catch(function () { return url; })
-                .then(function (path) {
-                    path = path.replace(/\.css$/, '');
-                    return { file: path };
-                })
-                .then(done);
-            }
-        });
+  function importer(url, file, done) {
+    let importerUrl = url;
+    if (importerOptions.aliases && importerOptions.aliases[importerUrl]) {
+      importerUrl = importerOptions.aliases[importerUrl];
     }
 
-    return importer;
+    local(importerUrl, file, function (err, isLocal) {
+      if (err || isLocal) {
+        done({ file: importerUrl });
+      } else {
+        resolve(importerUrl, file)
+          .catch(function () { return importerUrl; })
+          .then(function (path) {
+            const importerPath = path.replace(/\.css$/, '');
+            return { file: importerPath };
+          })
+          .then(done);
+      }
+    });
+  }
 
+  return importer;
 };

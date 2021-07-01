@@ -3,7 +3,7 @@
 const fs = require('fs');
 const path = require('path');
 const sass = require('sass');
-var importer = require('../../helpers/importer');
+const importer = require('../../helpers/importer');
 
 const mkdir = require('../../lib/mkdir');
 
@@ -21,11 +21,11 @@ module.exports = config => {
         console.log('Applying theme: ' + config.theme);
         aliases.$$theme = `hof-theme-${config.theme}`;
       }
-      
+
       sass.render({
         file: config.sass.src,
         importer: importer({ aliases })
-      }, function(err, result) {
+      }, function (err, result) {
         err ? reject(err) : resolve(result.css);
       });
     }))

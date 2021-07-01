@@ -1,33 +1,32 @@
-var path = require('path');
-var findup = require('findup');
+const path = require('path');
+const findup = require('findup');
 
 /**
  * @param {string} importOriginPath Path of file that made @import reference
  */
-module.exports = function nearestPackageRoot(packageName, importOriginPath) {
-    var pathToFind = path.join('node_modules', packageName, 'package.json');
-    var dirnameOfImportOrigin = path.dirname(importOriginPath);
-    var promise, handleFoundPath;
+module.exports = function (packageName, importOriginPath) {
+  const pathToFind = path.join('node_modules', packageName, 'package.json');
+  const dirnameOfImportOrigin = path.dirname(importOriginPath);
+  let handleFoundPath;
 
-    promise = new Promise(function (resolve, reject) {
-        handleFoundPath = function (err, nearestPackageParent) {
-            if(err) {
-                try {
-                    return resolve(path.dirname(require.resolve(`${packageName}/package.json`)));
-                } catch (e) {
+  const promise = new Promise(function (resolve, reject) {
+    handleFoundPath = function (err, nearestPackageParent) {
+      if (err) {
+        try {
+          return resolve(path.dirname(require.resolve(`${packageName}/package.json`)));
+        } catch (e) {
+          console.log(e);
+        }
+        return reject(err);
+      }
 
-                }
-                reject(err);
-                return;
-            }
+      const packageJSONLocation = path.join(nearestPackageParent, 'node_modules', packageName);
 
-            var packageJSONLocation = path.join( nearestPackageParent, 'node_modules', packageName);
+      return resolve(packageJSONLocation);
+    };
+  });
 
-            resolve(packageJSONLocation);
-        };
-    });
+  findup(dirnameOfImportOrigin, pathToFind, handleFoundPath);
 
-    findup(dirnameOfImportOrigin, pathToFind, handleFoundPath);
-
-    return promise;
+  return promise;
 };
