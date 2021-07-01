@@ -27,7 +27,7 @@ jobs:
           git_tag="$(git describe --abbrev=0)"
           if [ "$npm_tag" != "$git_tag" ] ; then npm publish; fi
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.npm_token }}
+          NODE_AUTH_TOKEN: ${{ secrets.npm_bot_token }}
       - name: 'Publish Release'
         uses: Roang-zero1/github-create-release-action@master
         with:
