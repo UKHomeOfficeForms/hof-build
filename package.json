@@ -35,7 +35,7 @@
     "minimatch": "^3.0.3",
     "minimist": "^1.2.0",
     "mkdirp": "^0.5.1",
-    "npm-sass": "^2.2.1",
+    "sass": "^1.35.1",
     "uglify-js": "^2.8.22",
     "witch": "^1.0.0"
   },
