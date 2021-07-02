@@ -1,5 +1,5 @@
 {
-  "name": "hof-sas-build",
+  "name": "hof-build",
   "version": "3.1.5",
   "description": "Performs build workflow for hof apps in prod and development",
   "main": "index.js",
