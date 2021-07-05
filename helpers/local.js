@@ -7,6 +7,11 @@ module.exports = function (url, file, done) {
     return done(null, true);
   }
 
+  // if the url is within node_modules, treat it as local
+  if(url.startsWith('node_modules')) {
+    return done(null, true);
+  }
+
   // otherwise construct a glob to match possible relative file paths
   const basedir = path.dirname(file);
 

@@ -24,7 +24,8 @@ module.exports = config => {
 
       sass.render({
         file: config.sass.src,
-        importer: importer({ aliases })
+        importer: importer({ aliases }),
+        aliases
       }, function (err, result) {
         err ? reject(err) : resolve(result.css);
       });
