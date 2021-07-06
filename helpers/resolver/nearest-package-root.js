@@ -15,7 +15,7 @@ module.exports = function (packageName, importOriginPath) {
         try {
           return resolve(path.dirname(require.resolve(`${packageName}/package.json`)));
         } catch (e) {
-          console.log(e);
+          console.log(`Failed to find module ${packageName}/package.json for ${importOriginPath}`, e);
         }
         return reject(err);
       }
